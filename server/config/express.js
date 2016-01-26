@@ -22,16 +22,25 @@ module.exports.init = function() {
 
   /* server wrapper around Google Maps API to get latitude + longitude coordinates from address */
   app.post('/api/coordinates', getCoordinates, function(req, res) {
-    res.send(req.results);
+    res.send('');
   });
 
-  /* serve static files */
   
+  /* serve static files */
+	app.use(express.static('public'));
 
   /* use the listings router for requests to the api */
-
-
+	app.use('/api/listings',listingsRouter);
   /* go to homepage for all routes not specified */ 
+	app.use(express.static(path.resolve('./client')));
+	
+	app.get('/',function(req,res){
+		res.render(path.resolve('./client/index.html'));
+	});
+	
+	app.all('/*',function(req,res){
+		res.redirect('/');
+	});
 
   return app;
 };  

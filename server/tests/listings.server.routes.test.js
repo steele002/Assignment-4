@@ -99,6 +99,7 @@ describe('Listings CRUD tests', function() {
           .expect(400)
           .end(function(err, res) {
             id = undefined;
+			console.log('got here');
             done();
           });
       })
@@ -109,7 +110,11 @@ describe('Listings CRUD tests', function() {
       Listing.remove({_id: id}, function(err){
         if(err) throw err;
         done();
-      })
+      });
+    }
+    else {
+      done();
     }
   });
-});
+  });
+  
